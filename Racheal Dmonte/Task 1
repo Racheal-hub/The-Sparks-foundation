@@ -1,0 +1,31 @@
+library(readr)
+library(ggplot2)
+
+#importing the data
+data<-read_csv("R practice projects/task 1.csv")
+head(data,10)
+tail(data,5)
+plot(data) #shows a linear trend
+summary(data)
+str(data)
+
+#To check outliers in our data
+boxplot(data$Hours)
+boxplot(data$Scores)
+#Hence, no outliers
+
+#Applying linear regression
+model<-lm(Scores~Hours,data)
+summary(model)
+#With an hour of additional study, the score increases by 9
+#With Adjusted R-squared:0.9509, we are able to show that our model is a good fit
+
+
+
+#Visualizing our model
+ggplot(data,aes(x=Hours,y=Scores))+geom_point()+geom_smooth(method="lm")
+
+#Predicting the score if a student studies for 9.25 hrs/day
+New<-data.frame(Hours=9.25)
+predict(model,New)
+#Hence,according to our model the student scores 92.90 when he/she studies for 9.25 hrs/day.
